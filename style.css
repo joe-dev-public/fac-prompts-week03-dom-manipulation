@@ -1,0 +1,17 @@
+* {
+    font-family: sans-serif;
+  }
+  
+  #valid {
+    padding: 1em;
+  }
+  
+  .pass {
+    background-color: greenyellow;
+  }
+  
+  .fail {
+    background-color: orangered;
+    color: white;
+  }
+  
