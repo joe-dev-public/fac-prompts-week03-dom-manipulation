@@ -63,4 +63,22 @@ body {
     background-color: orangered;
     color: white;
 }
-  
+
+#reasons li {
+    padding-left: 0.5em;
+}
+
+#reasons li::marker {
+    font-size: 2em;
+    font-weight: bold;
+}
+
+#reasons li.pass::marker {
+    color: greenyellow;
+    content: "\2713"; /* ✔ */
+}
+
+#reasons li.fail::marker {
+    color: orangered;
+    content: "\2717"; /* ✔ */
+}

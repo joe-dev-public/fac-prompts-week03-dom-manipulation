@@ -5,8 +5,11 @@
         - If you write a RegExp using 'single quotes', I think backslash character classes won't work.
 
     Todo:
+        - Show the validation criteria at all times, and have them ticked or crossed when the user requests validation.
         - Add tests.
-        - Add more emoji to the success message.
+
+    Eh, maybe?
+        - Update checkStringLength so that it doesn't pass if the string contains whitespace (or, it doesn't count whitespace).
 
 */
 
@@ -26,44 +29,69 @@ function windowLoaded() {
     form.onsubmit = function(event) { event.preventDefault(); } // note the parens () after preventDefault, they're required!
 
 
-    function updateValidityIndicator(status) {
+    let validityChecks = {
+        'whitespace': 'No spaces (or other whitespace :)',
+        'short': '6 characters or longer',
+        'case': 'One upper case and one lower case letter',
+        'numbers': 'At least two numbers (digits)',
+    };
 
-        // Empty/reset the response content and styling:
+
+    const validityCheckListItemIdPrefix = "validity-check-";
+
+
+    function resetValidityIndicator() {
+
         valid.classList.remove('pass');
         valid.classList.remove('fail');
-        valid.innerHTML = '<div id="answer"></div>';
-        const answerElement = document.getElementById('answer');
 
-        // As this simple script succumbs to ~irresistible bloat, these could get chucked up front as config vars 😌
-        let errorCodes = {
-            whitespace: 'No spaces (or other whitespace characters :) allowed!',
-            short: 'Too short: must be 6 characters or longer.',
-            case: 'Needs at least one upper case and one lower case letter.',
-            numbers: 'Needs at least two numbers (digits).',
-        };
+        let html = '<div id="answer"></div>';
+        html += '    <ul id="reasons">';
 
-        if (status === 'ok') {
-            valid.classList.add('pass');
-            answer.innerHTML = 'Yep 😌';
-        } else {
+        for (const [key, value] of Object.entries(validityChecks)) {
 
-            answer.innerHTML = 'No!';
-
-            let html = '<ul id="reasons">';
-
-            // check for presence of error codes in status array and print all necessary
-            for (let i = 0; i < status.length; i++) {
-                valid.classList.add('fail');
-                html += '<li>' + errorCodes[status[i]] + '</li>';
-            }
-
-            html += '</ul>';
-
-            valid.innerHTML += html;
+            html += `        <li id="${validityCheckListItemIdPrefix}${key}" class="pass">${value}</li>`;
 
         }
 
+        html += '    </ul>';
+        html += '</div>';
+
+        valid.innerHTML = html;
+
     }
+
+
+    function updateValidityIndicator(status) {
+
+        resetValidityIndicator();
+
+        const answerElement = document.getElementById('answer');
+        const reasonsElement = document.getElementById('reasons');
+
+        if (status === 'ok') {
+
+            valid.classList.add('pass');
+            answer.innerHTML = 'Yep 😌';
+
+        } else {
+
+            valid.classList.add('fail');
+            answer.innerHTML = 'No!';
+
+            // check for presence of error codes in status array and add pass/fail classes as necessary
+            for (let i = 0; i < status.length; i++) {
+
+                let id = validityCheckListItemIdPrefix + status[i];
+
+                document.getElementById(id).classList.add('fail');
+
+                //html += '<li>' + validityChecks[status[i]] + '</li>';
+            }
+
+        }
+
+    } // end of function updateValidityIndicator
 
 
     function checkStringWhitespace(str) {
