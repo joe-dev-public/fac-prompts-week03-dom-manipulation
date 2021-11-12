@@ -1,18 +1,49 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-    <title>Week 03: DOM Manipulation</title>
-    <link href="style.css" rel="stylesheet">
-  </head>
-  <body>
-    <form action="#">
-      <label>Codename validator: </label>
-      <input id="input" type="text" required />
-      <button id="submit">Submit</button>
-    </form>
-    <p>Is your codename valid?</p>
-    <p id="valid"></p>
-  </body>
-  <script src="index.js" type="text/javascript"></script>
+
+    <!--
+
+        Created as a response to https://learn.foundersandcoders.com/course/application/dom/
+
+        Todo:
+            - Make it look nice (including on mobile :).
+
+        Notes:
+            - Do we need a <form>? (What's best/most accessible practice?)
+            -- You don't, but there are pros and cons to either approach. It's 2*3 of one and 12/2 of the other:
+            --- Without <form>, there's less HTML, but you need to write JS to handle pressing enter/return with the input focused.
+            --- With <form>, there's more HTML, but you need to write JS so that submitting it doesn't do anything (like "reload" the page).
+
+    -->
+
+    <head>
+
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+        <title>Week 03: DOM Manipulation</title>
+        <link href="style.css" rel="stylesheet">
+        <script src="index.js"></script>
+
+    </head>
+
+    <body>
+
+        <form id="form">
+            <label id="label" for="input">
+                Is your codename valid?
+                <input id="input" type="text" placeholder="Enter your codename here..." required autofocus />
+            </label>
+            <button id="submit">Validate</button>
+        </form>
+
+        <p>Is your codename valid?</p>
+        <div id="valid"></div>
+
+    </body>
+
+    <script>
+        window.onload = function() {
+            windowLoaded();
+        }
+    </script>
+
 </html>

@@ -1,17 +1,66 @@
 * {
     font-family: sans-serif;
-  }
-  
-  #valid {
+}
+
+html {
+    height: 100%;
+}
+
+body {
+    background: rgb(191,191,191); /* backup for if gradient not supported? */
+    background: linear-gradient(0deg, rgba(191,191,191,1) 0%, rgba(246,211,255,1) 100%); 
+    /* not necessary? (could do more compatibility testing) */
+    /*
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    */
+    height: 100%;
+    margin: 1em;
+    padding: 0;
+}
+
+#label {
+    font-size: 2em;
+    font-style: italic;
+    font-weight: bold;
+}
+
+#input {
+    display: block;
+    font-family: Consolas, monospace;
+    font-size: 1em;
+    margin: 1em;
+    padding: 0.5em;
+    width: 40%;
+}
+
+#submit {
+    border-radius: 0;
+    font-family: Consolas, monospace;
+    font-size: 1.5em;
+    font-weight: bold;
+    margin: 1em;
     padding: 1em;
-  }
-  
-  .pass {
+    text-transform: uppercase;
+}
+
+/*
+#valid {
+    padding: 1em;
+}
+*/
+
+#answer {
+    display: flex;
+    padding: 1em;
+}
+
+.pass #answer {
     background-color: greenyellow;
-  }
-  
-  .fail {
+}
+
+.fail #answer {
     background-color: orangered;
     color: white;
-  }
+}
   
