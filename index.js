@@ -5,7 +5,9 @@
         - If you write a RegExp using 'single quotes', I think backslash character classes won't work.
 
     Todo:
-        - Show the validation criteria at all times, and have them ticked or crossed when the user requests validation.
+        - Fix the validation so that any chars OTHER than [0-9][a-z][A-Z] aren't allowed.
+        - Have validation criteria shown at all times, but give them a neutral symbol (like a bullet point!) before the user submits a name for the first time/when the page is refreshed, etc.
+        - Don't do anything if the input is blank?
         - Add tests.
 
     Eh, maybe?
@@ -16,17 +18,15 @@
 function windowLoaded() {
 
 
-    const form = document.getElementById('form');
+    const formElement = document.getElementById('form');
+    const inputElement = document.getElementById('input');
+    const submitElement = document.getElementById('submit');
+    const validElement = document.getElementById('valid');
+    const answerTextElement = document.getElementById('answertext');
+    const reasonsElement = document.getElementById('reasons');
 
-    const input = document.getElementById('input');
-
-    const submit = document.getElementById('submit');
-
-    const valid = document.getElementById('valid');
-
-
-    // form.onsubmit = function() { return false; } // Pros and cons to either of these approaches?
-    form.onsubmit = function(event) { event.preventDefault(); } // note the parens () after preventDefault, they're required!
+    // formElement.onsubmit = function() { return false; } // Pros and cons to either of these approaches?
+    formElement.onsubmit = function(event) { event.preventDefault(); } // note the parens () after preventDefault, they're required!
 
 
     let validityChecks = {
@@ -42,51 +42,67 @@ function windowLoaded() {
 
     function resetValidityIndicator() {
 
-        valid.classList.remove('pass');
-        valid.classList.remove('fail');
+        validElement.classList.remove('pass');
+        validElement.classList.remove('fail');
+        validElement.classList.add('neutral');
 
-        let html = '<div id="answer"></div>';
-        html += '    <ul id="reasons">';
+        answerTextElement.innerHTML = '(enter a codename)';
+
+        let html = '';
 
         for (const [key, value] of Object.entries(validityChecks)) {
 
-            html += `        <li id="${validityCheckListItemIdPrefix}${key}" class="pass">${value}</li>`;
+            html += `<li id="${validityCheckListItemIdPrefix}${key}">${value}</li>`;
 
         }
 
-        html += '    </ul>';
-        html += '</div>';
-
-        valid.innerHTML = html;
+        reasonsElement.innerHTML = html;
 
     }
 
 
-    function updateValidityIndicator(status) {
+    function updateValidityIndicator(pass, errors) {
 
         resetValidityIndicator();
 
-        const answerElement = document.getElementById('answer');
-        const reasonsElement = document.getElementById('reasons');
+        // Need to change the logic here, now: *always* update all reasons (pass or fail), etc.
 
-        if (status === 'ok') {
+        if (pass === true) {
 
-            valid.classList.add('pass');
-            answer.innerHTML = 'Yep 😌';
+            validElement.classList.remove('neutral');
+            validElement.classList.add('pass');
+            answerTextElement.innerHTML = 'Yes';
 
         } else {
 
-            valid.classList.add('fail');
-            answer.innerHTML = 'No!';
+            validElement.classList.remove('neutral');
+            validElement.classList.add('fail');
+            answerTextElement.innerHTML = 'No!';
 
-            // check for presence of error codes in status array and add pass/fail classes as necessary
-            for (let i = 0; i < status.length; i++) {
+        }
 
-                let id = validityCheckListItemIdPrefix + status[i];
+        let reasonListElements = reasonsElement.children;
 
-                document.getElementById(id).classList.add('fail');
+        for (let i = 0; i < reasonListElements.length; i++){
 
-                //html += '<li>' + validityChecks[status[i]] + '</li>';
+            // fix: this doesn't work if status array is empty. so.. handle that efficiently :) 
+
+            // For every list element, check how to flag it:
+            if (errors.some( (el) => { if (validityCheckListItemIdPrefix + el === reasonListElements[i].getAttribute('id')) { return true; } } ) === true) {
+
+                // fail
+
+                reasonListElements[i].classList.remove('pass');
+                reasonListElements[i].classList.add('fail');
+
+            } else {
+
+                // pass
+                //console.log(reasonListElements[i]);
+
+                reasonListElements[i].classList.remove('fail');
+                reasonListElements[i].classList.add('pass');
+
             }
 
         }
@@ -136,11 +152,17 @@ function windowLoaded() {
 
     function checkString() {
 
-        let str = input.value;
+        let str = inputElement.value;
 
         let ret = [];
 
         let pass = true;
+
+        // If the user hasn't entered anything, then reset.
+        if (str.length === 0){
+            resetValidityIndicator();
+            return false;
+        }
 
         if (checkStringWhitespace(str) === false) {
             pass = false;
@@ -163,13 +185,15 @@ function windowLoaded() {
         }
 
         if (pass === true) {
-            updateValidityIndicator('ok');
+            updateValidityIndicator(true, ret);
         } else {
-            updateValidityIndicator(ret);
+            updateValidityIndicator(false, ret);
         }
     
     }
 
-    submit.onclick = checkString;
+    submitElement.onclick = checkString;
+
+    resetValidityIndicator();
 
 }

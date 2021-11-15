@@ -1,3 +1,20 @@
+/*
+
+    Todo:
+        - Add some @media bits to make sure the width is usable on very narrow/portrait mobile viewports.
+
+*/
+
+/* Declare some variables: */
+:root {
+    --fail-colour: orangered; /* hsl(16, 100%, 50%) */
+    --pass-colour: greenyellow; /* hsl(84, 100%, 59%) */
+    --fail-colour-fade: hsl(16, 100%, 76%);
+    --pass-colour-fade: hsl(84, 100%, 76%);
+    --neutral-colour: lightgrey; /* hsl(0, 0%, 83%) */
+    --neutral-colour-text: hsl(0, 0%, 53%);
+}
+
 * {
     font-family: sans-serif;
 }
@@ -7,78 +24,160 @@ html {
 }
 
 body {
-    background: rgb(191,191,191); /* backup for if gradient not supported? */
-    background: linear-gradient(0deg, rgba(191,191,191,1) 0%, rgba(246,211,255,1) 100%); 
+    /* 
+    background: rgb(246,211,255);
+    background: linear-gradient(0deg, rgba(191,191,191,1) 0%, rgba(246,211,255,1) 100%);
+    */
     /* not necessary? (could do more compatibility testing) */
     /*
     background-repeat: no-repeat;
     background-attachment: fixed;
     */
+    /*
     height: 100%;
     margin: 1em;
     padding: 0;
+    */
+    background-color: ghostwhite;
+}
+
+#everything {
+    margin: 0 auto 0 auto;
+    width: 50%;
 }
 
 #label {
+    display: block;
     font-size: 2em;
-    font-style: italic;
+    /* font-style: italic; */
     font-weight: bold;
+    margin-top: 1em;
+    text-align: center;
+}
+
+#input, #submit {
+    margin: 1em auto 0 auto;
 }
 
 #input {
     display: block;
-    font-family: Consolas, monospace;
+    /* font-family: Consolas, monospace; */
     font-size: 1em;
-    margin: 1em;
     padding: 0.5em;
-    width: 40%;
+    /* width: 100%; */
 }
 
 #submit {
-    border-radius: 0;
-    font-family: Consolas, monospace;
+    /* background-color: hsl(220, 100%, 50%); */
+    /* border: 1px solid #000; */
+    /* color: whitesmoke; */
+    display: block;
+    /* font-family: Consolas, monospace; */
     font-size: 1.5em;
     font-weight: bold;
-    margin: 1em;
     padding: 1em;
-    text-transform: uppercase;
+    /* text-transform: uppercase; */
 }
 
-/*
-#valid {
-    padding: 1em;
+#submit:hover {
+    /* background-color: hsl(240, 100%, 30%); */
 }
-*/
+
+#valid {
+    margin: 1em auto 0 auto;
+}
+
+#valid * {
+    margin: 0 auto;
+}
+
+#valid h2 {
+    margin-top: 2em;
+    width: max-content;
+}
 
 #answer {
-    display: flex;
-    padding: 1em;
+    border-radius: 50%;
+    height: 10em;
+    margin-top: 0.75em;
+    text-align: center;
+    width: 10em;
+    /* A dangerous tactic for getting the text in the vertical centre! */
+    line-height: 10em;
+    overflow: hidden; /* Shouldn't be necessary, but.. y'know. */
+}
+
+#answer span {
+    font-size: 1.5em;
+    font-weight: bold;
+}
+
+.neutral #answer span {
+    color: var(--neutral-colour-text);
+    font-size: 1em;
+    font-weight: 400;
+}
+
+.neutral #answer {
+    background-color: var(--neutral-colour);
 }
 
 .pass #answer {
-    background-color: greenyellow;
+    background-color: var(--pass-colour);
 }
 
 .fail #answer {
-    background-color: orangered;
+    background-color: var(--fail-colour);
     color: white;
 }
 
+#reasons {
+    margin-top: 1em;
+    width: max-content;
+}
+
 #reasons li {
-    padding-left: 0.5em;
+    background-color: var(--neutral-colour);
+    border-radius: 5px;
+    /* border: 1px solid grey; */
+    font-size: 1.25em;
+    margin: 0 0 0.5em 0;
+    padding: 0.5em;
+    vertical-align: top;
 }
 
 #reasons li::marker {
-    font-size: 2em;
+    content: "\2192"; /* → */
     font-weight: bold;
 }
 
+/*
+
+    Sure, this is "neat" CSS, but there's probably a more accessible way to do this.
+    (Consider a screen reader: it should be completely clear which validation points the user input meets, and which do not.)
+
+*/
+
+#reasons li.pass {
+    background-color: var(--pass-colour-fade);
+}
+
+#reasons li.fail {
+    background-color: var(--fail-colour-fade);
+}
+
+/*
+#reasons li.pass::marker, #reasons li.fail::marker {
+    font-size: 2em;
+}
+*/
+
 #reasons li.pass::marker {
-    color: greenyellow;
+    color: var(--pass-colour);
     content: "\2713"; /* ✔ */
 }
 
 #reasons li.fail::marker {
-    color: orangered;
-    content: "\2717"; /* ✔ */
+    color: var(--fail-colour);
+    content: "\2717"; /* ✗ */
 }

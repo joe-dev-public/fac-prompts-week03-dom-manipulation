@@ -27,15 +27,27 @@
 
     <body>
 
-        <form id="form">
-            <label id="label" for="input">
-                Is your codename valid?
-                <input id="input" type="text" placeholder="Enter your codename here..." required autofocus />
-            </label>
-            <button id="submit">Validate</button>
-        </form>
+        <div id="everything">
 
-        <div id="valid"></div>
+            <form id="form">
+                <label id="label" for="input">
+                    Enter your codename:
+                    <input id="input" type="text" placeholder="e.g. CoolName42" required autofocus />
+                </label>
+                <button id="submit">Validate</button>
+            </form>
+
+            <!--
+                Re progressive enhancement, it's not good to populate this markup using JS.
+                But given this is an extremely simple demo that relies on JS to work *at all*, I think it's OK.
+            -->
+            <div id="valid" class="neutral">
+                <h2>Is your codename valid?</h2>
+                <div id="answer"><span id="answertext"></span></div>
+                <ul id="reasons"></ul>
+            </div>
+
+        </div>
 
     </body>
 
