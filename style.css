@@ -1,9 +1,22 @@
 /*
 
     Todo:
-        - Add some @media bits to make sure the width is usable on very narrow/portrait mobile viewports.
+        - Test on mobile and make it look nice:
+            - Make sure text, input, button, etc. big enough and easy to read without zooming, etc.
+        - Change ::marker stuff for another approach, probably:
+            - How accessible is it? (Consider a screen-reader: it should be completely clear which validation points the user input meets, and which do not.)
+            - According to MDN, Safari isn't so great with these yet?
+
+        - Low priority:
+            - Tweak various styles so they just look a bit better? :)
+
+
+        Notes:
+            - Not being able to nest comments is still quite painful. ;)
+            - Use rem instead of em.
 
 */
+
 
 /* Declare some variables: */
 :root {
@@ -19,9 +32,10 @@
     font-family: sans-serif;
 }
 
-html {
-    height: 100%;
-}
+/* html { */
+    /* height: 100%; */ /* For the gradient background, IIRC. */
+/* } */
+
 
 body {
     /* 
@@ -39,31 +53,77 @@ body {
     padding: 0;
     */
     background-color: ghostwhite;
+    margin: 2rem 1rem;
 }
 
+
+/* Testing bits: */
+/*
+#everything {
+    background-color: lightskyblue;
+}
+
+#form {
+    background-color: lightseagreen;
+}
+
+#label {
+    background-color: lightgreen;
+}
+
+#valid {
+    background-color: lightpink;
+}
+
+#reasons {
+    background-color: lightsteelblue;
+}
+*/
+/* End of testing bit. */
+
+
+/*
 #everything {
     margin: 0 auto 0 auto;
     width: 50%;
 }
+*/
+
+/* Mobile bits: */
+
+@media screen and (max-width: 1080px) {
+
+    /*
+    #everything {
+        margin: 0;
+        width: 100%;
+    }
+    */
+
+}
+
+/* End of mobile bits. */
+
 
 #label {
     display: block;
-    font-size: 2em;
+    font-size: 1.8rem;
     /* font-style: italic; */
     font-weight: bold;
-    margin-top: 1em;
+    /* margin-top: 1em; */
     text-align: center;
 }
 
 #input, #submit {
-    margin: 1em auto 0 auto;
+    margin: 1.5rem auto 0 auto;
 }
 
 #input {
     display: block;
     /* font-family: Consolas, monospace; */
-    font-size: 1em;
-    padding: 0.5em;
+    font-size: 2rem;
+    padding: 1rem;
+    text-align: center;
     /* width: 100%; */
 }
 
@@ -73,18 +133,20 @@ body {
     /* color: whitesmoke; */
     display: block;
     /* font-family: Consolas, monospace; */
-    font-size: 1.5em;
+    font-size: 1.5rem;
     font-weight: bold;
-    padding: 1em;
+    padding: 1.5rem 2.5rem;
     /* text-transform: uppercase; */
 }
 
+/*
 #submit:hover {
-    /* background-color: hsl(240, 100%, 30%); */
+    background-color: hsl(240, 100%, 30%);
 }
+*/
 
 #valid {
-    margin: 1em auto 0 auto;
+    margin: 1.5rem auto 0 auto;
 }
 
 #valid * {
@@ -92,30 +154,30 @@ body {
 }
 
 #valid h2 {
-    margin-top: 2em;
+    margin-top: 3rem;
     width: max-content;
 }
 
 #answer {
     border-radius: 50%;
-    height: 10em;
-    margin-top: 0.75em;
+    height: 10rem;
+    margin-top: 0.75rem;
     text-align: center;
-    width: 10em;
+    width: 10rem;
     /* A dangerous tactic for getting the text in the vertical centre! */
-    line-height: 10em;
+    line-height: 10rem;
     overflow: hidden; /* Shouldn't be necessary, but.. y'know. */
 }
 
 #answer span {
-    font-size: 1.5em;
+    font-size: 1.5rem;
     font-weight: bold;
 }
 
 .neutral #answer span {
     color: var(--neutral-colour-text);
-    font-size: 1em;
-    font-weight: 400;
+    font-size: 1rem;
+    font-weight: normal;
 }
 
 .neutral #answer {
@@ -132,31 +194,21 @@ body {
 }
 
 #reasons {
-    margin-top: 1em;
+    list-style-type: none;
+    margin-top: 1rem;
+    padding-left: 0;
     width: max-content;
 }
 
 #reasons li {
     background-color: var(--neutral-colour);
-    border-radius: 5px;
+    border-radius: 0.5rem;
     /* border: 1px solid grey; */
-    font-size: 1.25em;
+    font-size: 1.25rem;
     margin: 0 0 0.5em 0;
     padding: 0.5em;
     vertical-align: top;
 }
-
-#reasons li::marker {
-    content: "\2192"; /* → */
-    font-weight: bold;
-}
-
-/*
-
-    Sure, this is "neat" CSS, but there's probably a more accessible way to do this.
-    (Consider a screen reader: it should be completely clear which validation points the user input meets, and which do not.)
-
-*/
 
 #reasons li.pass {
     background-color: var(--pass-colour-fade);
@@ -166,18 +218,36 @@ body {
     background-color: var(--fail-colour-fade);
 }
 
+/* Deprecated ::marker stuff. */
+
+/* \2192 = → */
+/*
+#reasons li::marker {
+    content: "\2192";
+    font-weight: bold;
+}
+*/
+
 /*
 #reasons li.pass::marker, #reasons li.fail::marker {
     font-size: 2em;
 }
 */
 
+/* \2713 = ✔ */
+/*
 #reasons li.pass::marker {
     color: var(--pass-colour);
-    content: "\2713"; /* ✔ */
+    content: "\2713";
 }
+*/
 
+/* \2717 = ✗ */
+/*
 #reasons li.fail::marker {
     color: var(--fail-colour);
-    content: "\2717"; /* ✗ */
+    content: "\2717";
 }
+*/
+
+/* End of deprecated ::marker stuff. */

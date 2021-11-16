@@ -5,13 +5,13 @@
         - If you write a RegExp using 'single quotes', I think backslash character classes won't work.
 
     Todo:
-        - Fix the validation so that any chars OTHER than [0-9][a-z][A-Z] aren't allowed.
-        - Have validation criteria shown at all times, but give them a neutral symbol (like a bullet point!) before the user submits a name for the first time/when the page is refreshed, etc.
-        - Don't do anything if the input is blank?
+        - Dynamically add neutral/pass/fail icons to validation criteria list (in an accessible way :).
         - Add tests.
 
     Eh, maybe?
         - Update checkStringLength so that it doesn't pass if the string contains whitespace (or, it doesn't count whitespace).
+        - These points aren't strictly specified by the F&C prompt, but they are somewhat implied (and would make sense), so you could implement them:
+            - Fix the validation so that any chars OTHER than [0-9][a-z][A-Z] aren't allowed.    
 
 */
 
@@ -65,8 +65,6 @@ function windowLoaded() {
 
         resetValidityIndicator();
 
-        // Need to change the logic here, now: *always* update all reasons (pass or fail), etc.
-
         if (pass === true) {
 
             validElement.classList.remove('neutral');
@@ -85,21 +83,16 @@ function windowLoaded() {
 
         for (let i = 0; i < reasonListElements.length; i++){
 
-            // fix: this doesn't work if status array is empty. so.. handle that efficiently :) 
-
             // For every list element, check how to flag it:
             if (errors.some( (el) => { if (validityCheckListItemIdPrefix + el === reasonListElements[i].getAttribute('id')) { return true; } } ) === true) {
 
                 // fail
-
                 reasonListElements[i].classList.remove('pass');
                 reasonListElements[i].classList.add('fail');
 
             } else {
 
                 // pass
-                //console.log(reasonListElements[i]);
-
                 reasonListElements[i].classList.remove('fail');
                 reasonListElements[i].classList.add('pass');
 
