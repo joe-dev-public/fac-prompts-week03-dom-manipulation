@@ -1,3 +1,5 @@
+'use strict';
+
 /*
 
     Notes:
@@ -16,7 +18,6 @@
 */
 
 function windowLoaded() {
-
 
     const formElement = document.getElementById('form');
     const inputElement = document.getElementById('input');
@@ -189,4 +190,4 @@ function windowLoaded() {
 
     resetValidityIndicator();
 
-}
+} // end of function windowLoaded
