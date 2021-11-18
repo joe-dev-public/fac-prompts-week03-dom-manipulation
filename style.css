@@ -84,12 +84,12 @@ body {
 /* End of testing bit. */
 
 
-/*
+
 #everything {
-    margin: 0 auto 0 auto;
-    width: 50%;
+    margin: 0 auto;
+    width: 30rem;
 }
-*/
+
 
 /* Mobile bits: */
 
@@ -126,7 +126,7 @@ body {
     font-size: 2rem;
     padding: 1rem;
     text-align: center;
-    /* width: 100%; */
+    width: 100%;
 }
 
 #submit {
