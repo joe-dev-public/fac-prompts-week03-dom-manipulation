@@ -1,16 +1,12 @@
 /*
 
     Todo:
-        - Test on mobile and make it look nice:
-            - Make sure text, input, button, etc. big enough and easy to read without zooming, etc.
-            - What's the best way to achieve this?
-        - Change ::marker stuff for another approach, probably:
-            - How accessible is it? (Consider a screen-reader: it should be completely clear which validation points the user input meets, and which do not.)
-            - According to MDN, Safari isn't so great with these yet?
 
         - Low priority:
+            - ::marker stuff has been removed, but replace it with another approach?
+                - It should be accessible. (Consider a screen-reader: it should be completely clear which validation points the user input meets, and which do not.)
+                - (One reason for removing ::marker stuff was that, according to MDN, Safari isn't so great with these yet.)
             - Tweak various styles so they just look a bit better? :)
-
 
         Notes:
             - Not being able to nest comments is still quite painful. ;)
