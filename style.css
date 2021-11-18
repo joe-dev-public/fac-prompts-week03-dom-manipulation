@@ -199,7 +199,7 @@ body {
     list-style-type: none;
     margin-top: 1rem;
     padding-left: 0;
-    width: max-content;
+    max-width: max-content;
 }
 
 #reasons li {
